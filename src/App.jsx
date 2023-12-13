@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0)
   const genrateCookie = async () => {
     console.log(`hello there`);
-    const res = await axios.post('http://localhost:3000/setCookie',{token:"welcome"},{
+    const res = await axios.post('https://cookie-4l95.onrender.com/setCookie',{token:"welcome"},{
       withCredentials:true,
       headers: {
         "Content-Type":'application/json',
@@ -20,7 +20,7 @@ function App() {
 
   }
   const sendCookie = async () => {
-    const res = await axios.get('http://localhost:3000/sendCookie',{
+    const res = await axios.get('https://cookie-4l95.onrender.com/sendCookie',{
       withCredentials:true,
       headers: {
         "jwt":"ejdugfiheurg",
