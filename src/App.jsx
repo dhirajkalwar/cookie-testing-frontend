@@ -20,7 +20,7 @@ function App() {
 
   const genrateCookie = async () => {
     console.log(`hello there`);
-    const res = await axios.post('http://localhost:3000/setCookie',{token:"welcome"},{
+    const res = await axios.post('/setCookie',{token:"welcome"},{
       withCredentials:true,
       headers: {
         "Content-Type":'application/json',
