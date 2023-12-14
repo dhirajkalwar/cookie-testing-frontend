@@ -2,25 +2,44 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import axios from 'axios';
+import axios from './axiosConfig';
+import Cookies from 'js-cookie';
 
 function App() {
   const [count, setCount] = useState(0)
+  const [jwt, setJwt] = useState(null);
+
+
+  // const http = axios.create({
+  //   baseURL:'http://localhost:3000',
+  //   headers:{
+  //     'jwtoken':"welcome"
+  //   }
+  // });
+
+
   const genrateCookie = async () => {
     console.log(`hello there`);
-    const res = await axios.post('https://cookie-4l95.onrender.com/setCookie',{token:"welcome"},{
+    const res = await axios.post('http://localhost:3000/setCookie',{token:"welcome"},{
       withCredentials:true,
       headers: {
         "Content-Type":'application/json',
       }
     });
+     console.log(res.headers);
+     Cookies.set('jwtoken',res.headers['jwtoken'],{ expires: 7, path: '/' });
+
+    // const cookie = res.headers['set-cookie'];
+    // const [, , token] = cookie.split(';');
+    // setJwt(token);
     if(res) {
       console.log(`Success`);
     }
 
   }
   const sendCookie = async () => {
-    const res = await axios.get('https://cookie-4l95.onrender.com/sendCookie',{
+    // axios.defaults.headers.common['MyCustomHeader'] = 'header value';
+    const res = await axios.get('/sendCookie',{
       withCredentials:true,
       headers: {
         "jwt":"ejdugfiheurg",
@@ -30,6 +49,9 @@ function App() {
       console.log(`ok`);
     }
   }
+  const deleteCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  };
 
   return (
     <>
@@ -55,7 +77,7 @@ function App() {
       </p>
       <button onClick={genrateCookie}>Set Cookie</button>
       <button onClick={sendCookie}>Send Cookie</button>
-
+      <button onClick={() => deleteCookie('jwtoken')}>Delete Cookie</button>
     </>
   )
 }
